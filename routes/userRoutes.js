@@ -18,6 +18,7 @@ import {
   updateProfile,
   updateprofilepicture,
   updateUserRole,
+  webinar,
 } from "../controllers/userController.js";
 import { authorizeAdmin, isAuthenticated } from "../middlewares/auth.js";
 import singleUpload from "../middlewares/multer.js";
@@ -30,6 +31,8 @@ router.route("/register").post(register);
 
 // Login
 router.route("/contact").post(contact);
+router.route("/webinar").post(webinar);
+
 // router.route("/contact").post(contact);
 
 router.route("/login").post(login);

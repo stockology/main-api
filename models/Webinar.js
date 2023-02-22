@@ -13,9 +13,17 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, "Please enter your email"],
     unique: false,
     validate: validator.isEmail,
+  },
+  message: {
+    type: String,
+    require: false,
+    default: "",
+  },
+  postAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

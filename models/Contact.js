@@ -13,7 +13,6 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-
     unique: false,
     validate: validator.isEmail,
   },
@@ -22,6 +21,10 @@ const schema = new mongoose.Schema({
     type: String,
     require: false,
     default: "",
+  },
+  postAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

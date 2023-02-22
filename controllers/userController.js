@@ -9,6 +9,7 @@ import { Course } from "../models/Course.js";
 import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
 import { Stats } from "../models/Stats.js";
+import { Webinar } from "../models/Webinar.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password, phone } = req.body;
@@ -45,8 +46,32 @@ export const contact = catchAsyncError(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message,
+    message: "Message Send Successfully",
     contact,
+    email,
+  });
+});
+
+export const webinar = catchAsyncError(async (req, res, next) => {
+  const { name, email, phone, message } = req.body;
+
+  if (!name || !phone)
+    return next(new ErrorHandler("Please enter all field", 400));
+
+  let webinar = Webinar;
+
+  // if (user) return next(new ErrorHandler("User Already Exist", 409));
+  webinar = await Webinar.create({
+    name,
+    phone,
+    message,
+    email,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Message send Successfully",
+    webinar,
   });
 });
 
