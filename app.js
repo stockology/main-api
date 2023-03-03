@@ -18,6 +18,7 @@ app.use(
     extended: true,
   })
 );
+
 app.use(cookieParser());
 app.use(
   cors({

@@ -25,7 +25,6 @@ import singleUpload from "../middlewares/multer.js";
 
 const router = express.Router();
 router.use(cookieParser());
-
 // To register a new user
 router.route("/register").post(register);
 
