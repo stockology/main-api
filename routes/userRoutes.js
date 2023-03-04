@@ -9,6 +9,7 @@ import {
   deleteUser,
   forgetPassword,
   getAllUsers,
+  getAllWebinar,
   getMyProfile,
   login,
   logout,
@@ -69,6 +70,8 @@ router.route("/removefromplaylist").delete(isAuthenticated, removeFromPlaylist);
 
 // Admin Routes
 router.route("/admin/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
+router.route("/admin/webinar").get(isAuthenticated, authorizeAdmin, getAllWebinar);
+
 
 router
   .route("/admin/user/:id")

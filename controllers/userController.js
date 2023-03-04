@@ -283,7 +283,14 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
     users,
   });
 });
+export const getAllWebinar = catchAsyncError(async (req, res, next) => {
+  const webinars = await Webinar.find({});
 
+  res.status(200).json({
+    success: true,
+    webinars,
+  });
+});
 export const updateUserRole = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
