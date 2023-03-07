@@ -8,6 +8,8 @@ import {
   deleteMyProfile,
   deleteUser,
   forgetPassword,
+  getAllContacts,
+  getAllNotification,
   getAllUsers,
   getAllWebinar,
   getMyProfile,
@@ -36,6 +38,7 @@ router.route("/webinar").post(webinar);
 // router.route("/contact").post(contact);
 
 router.route("/login").post(login);
+router.route("/notification").get(isAuthenticated, getAllNotification);
 
 // logout
 router.route("/logout").get(logout);
@@ -70,8 +73,18 @@ router.route("/removefromplaylist").delete(isAuthenticated, removeFromPlaylist);
 
 // Admin Routes
 router.route("/admin/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
-router.route("/admin/webinar").get(isAuthenticated, authorizeAdmin, getAllWebinar);
-
+router
+  .route("/admin/webinars")
+  .get(isAuthenticated, authorizeAdmin, getAllWebinar);
+router
+  .route("/admin/contacts")
+  .get(isAuthenticated, authorizeAdmin, getAllContacts);
+router
+  .route("/admin/notification")
+  .get(isAuthenticated, authorizeAdmin, getAllNotification);
+router
+  .route("/admin/usernotification")
+  .get(isAuthenticated, getAllNotification);
 
 router
   .route("/admin/user/:id")

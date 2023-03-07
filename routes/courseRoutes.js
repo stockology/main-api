@@ -7,6 +7,7 @@ import {
   getAllCourses,
   getCourseLectures,
 } from "../controllers/courseController.js";
+import { createNotification } from "../controllers/userController.js";
 import {
   authorizeAdmin,
   isAuthenticated,
@@ -33,5 +34,10 @@ router
 
 // Delete Lecture
 router.route("/lecture").delete(isAuthenticated, authorizeAdmin, deleteLecture);
+
+// niotification
+router
+  .route("/createnotification")
+  .post(isAuthenticated, authorizeAdmin, singleUpload, createNotification);
 
 export default router;

@@ -10,6 +10,7 @@ import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
 import { Stats } from "../models/Stats.js";
 import { Webinar } from "../models/Webinar.js";
+import { Notification } from "../models/Notification.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password, phone } = req.body;
@@ -289,6 +290,50 @@ export const getAllWebinar = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     webinars,
+  });
+});
+export const getAllContacts = catchAsyncError(async (req, res, next) => {
+  const contacts = await Contact.find({});
+
+  res.status(200).json({
+    success: true,
+    contacts,
+  });
+});
+export const createNotification = catchAsyncError(async (req, res, next) => {
+  const { title, description, subheading } = req.body;
+
+  if (!title || !description)
+    return next(new ErrorHandler("Please add all fields", 400));
+
+  const file = req.file;
+
+  const fileUri = getDataUri(file);
+
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+
+  await Notification.create({
+    title,
+    description,
+    subheading,
+    poster: {
+      public_id: mycloud.public_id,
+      url: mycloud.secure_url,
+    },
+  });
+
+  res.status(201).json({
+    success: true,
+    message: "notification created Successfully.",
+  });
+});
+
+export const getAllNotification = catchAsyncError(async (req, res, next) => {
+  const notification = await Notification.find({});
+
+  res.status(200).json({
+    success: true,
+    notification,
   });
 });
 export const updateUserRole = catchAsyncError(async (req, res, next) => {
