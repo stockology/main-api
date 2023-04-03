@@ -15,9 +15,11 @@ import {
   getMyProfile,
   login,
   logout,
+  partnersregister,
   register,
   removeFromPlaylist,
   resetPassword,
+  subscribenow,
   updateProfile,
   updateprofilepicture,
   updateUserRole,
@@ -30,10 +32,12 @@ const router = express.Router();
 router.use(cookieParser());
 // To register a new user
 router.route("/register").post(register);
+router.route("/partnersregister").post(partnersregister);
 
 // Login
 router.route("/contact").post(contact);
 router.route("/webinar").post(webinar);
+router.route("/subscribenow").post(subscribenow);
 
 // router.route("/contact").post(contact);
 

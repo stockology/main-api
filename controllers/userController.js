@@ -11,6 +11,8 @@ import getDataUri from "../utils/dataUri.js";
 import { Stats } from "../models/Stats.js";
 import { Webinar } from "../models/Webinar.js";
 import { Notification } from "../models/Notification.js";
+import { Partners } from "../models/Partners.js";
+import { subscribeNow } from "../models/subscribeNow.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password, phone } = req.body;
@@ -29,6 +31,29 @@ export const register = catchAsyncError(async (req, res, next) => {
   });
   sendToken(res, user, "Registered Successfully", 201);
 });
+export const partnersregister = catchAsyncError(async (req, res, next) => {
+  const { firstName, lastname, phone, email, referralId, password } = req.body;
+
+  if (!firstName || !lastname || !phone || !email || !password)
+    return next(new ErrorHandler("Please enter all field", 400));
+
+  let partner = await Partners.findOne({ phone });
+
+  if (partner) return next(new ErrorHandler("User Already Exist", 409));
+  partner = await Partners.create({
+    firstName,
+    lastname,
+    phone,
+    email,
+    referralId,
+    password,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Register Successfully",
+    partner,
+  });
+});
 export const contact = catchAsyncError(async (req, res, next) => {
   const { name, email, phone, message } = req.body;
 
@@ -41,6 +66,7 @@ export const contact = catchAsyncError(async (req, res, next) => {
   contact = await Contact.create({
     name,
     phone,
+    email,
     message,
   });
 
@@ -48,7 +74,25 @@ export const contact = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Message Send Successfully",
     contact,
-    email,
+  });
+});
+
+export const subscribenow = catchAsyncError(async (req, res, next) => {
+  const { phone } = req.body;
+
+  if (!phone) return next(new ErrorHandler("Please enter Phone Number", 400));
+
+  let subscribenow = subscribeNow;
+
+  // if (user) return next(new ErrorHandler("User Already Exist", 409));
+  subscribenow = await subscribeNow.create({
+    phone,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Message Send Successfully",
+    subscribenow,
   });
 });
 
